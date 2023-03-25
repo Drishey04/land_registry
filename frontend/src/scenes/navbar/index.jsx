@@ -63,7 +63,10 @@ const NavbarPage = () => {
                         }, }} onClick={() => navigate("/user")}>
                         User
                     </Typography>
-                    <Typography sx={{ fontSize: "20px" }} onClick={() => navigate("/land_inspector")}>
+                    <Typography sx={{ fontSize: "20px", "&:hover": {
+                        color: primaryLight,
+                        cursor: "pointer",
+                    },}} onClick={() => navigate("/land_inspector")}>
                         Land Inspector
                     </Typography>
                     <Typography sx={{ fontSize: "20px" }} onClick={() => navigate("/contract_owner")}>

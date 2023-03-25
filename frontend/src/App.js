@@ -4,6 +4,7 @@ import { createTheme } from "@mui/material/styles";
 import { themeSettings } from "./theme";
 import LandingPage from "scenes/landingpage/index.jsx";
 import UserDashboard from "scenes/userdashboard/index.jsx";
+import LandInspectorDashboard from "scenes/landinspector";
 
 function App() {
 
@@ -17,6 +18,8 @@ function App() {
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/user" element={<UserDashboard />} />
+            <Route path="/land_inspector" element={<LandInspectorDashboard />} />
+            
  
           </Routes>
       </ThemeProvider>
