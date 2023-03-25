@@ -5,6 +5,10 @@ import { themeSettings } from "./theme";
 import LandingPage from "scenes/landingpage/index.jsx";
 import UserDashboard from "scenes/userdashboard/index.jsx";
 import ContractDashboard from "scenes/contractowner";
+import LandInspectorDashboard from "scenes/landinspector";
+import RegisterPage from "scenes/registration/user";
+import LIRegisterPage from "scenes/registration/land_inspector";
+
 
 function App() {
 
@@ -19,6 +23,9 @@ function App() {
             <Route path="/" element={<LandingPage />} />
             <Route path="/user" element={<UserDashboard />} />
             <Route path="/contract_owner" element={<ContractDashboard />} />
+            <Route path="/land_inspector" element={<LandInspectorDashboard />} />
+            <Route path="/user/registration" element={<RegisterPage />} />
+            <Route path="/land_inspector/registration" element={<LIRegisterPage />} />
  
           </Routes>
       </ThemeProvider>

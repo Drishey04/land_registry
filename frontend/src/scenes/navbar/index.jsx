@@ -122,16 +122,28 @@ const NavbarPage = () => {
                     {/* <Typography sx={{ fontSize: "17px" }} onClick={() => navigate("/")}>
                         Home
                     </Typography> */}
-                    <Typography sx={{ fontSize: "17px" }} onClick={() => navigate("/user")}>
+                    <Typography sx={{ fontSize: "17px" , "&:hover": {
+                        color: primaryLight,
+                        cursor: "pointer",
+                        },}} onClick={() => navigate("/user")}>
                         User
                     </Typography>
-                    <Typography sx={{ fontSize: "17px" }} onClick={() => navigate("/land_inspector")}>
+                    <Typography sx={{ fontSize: "17px", "&:hover": {
+                        color: primaryLight,
+                        cursor: "pointer",
+                        }, }} onClick={() => navigate("/land_inspector")}>
                         Land Inspector
                     </Typography>
-                    <Typography sx={{ fontSize: "17px" }} onClick={() => navigate("/contract_owner")}>
+                    <Typography sx={{ fontSize: "17px", "&:hover": {
+                        color: primaryLight,
+                        cursor: "pointer",
+                        }, }} onClick={() => navigate("/contract_owner")}>
                         Contract Owner
                     </Typography>
-                    <Typography sx={{ fontSize: "17px" }} onClick={() => navigate("/about")}>
+                    <Typography sx={{ fontSize: "17px", "&:hover": {
+                        color: primaryLight,
+                        cursor: "pointer",
+                        }, }} onClick={() => navigate("/about")}>
                         About
                     </Typography>        
             

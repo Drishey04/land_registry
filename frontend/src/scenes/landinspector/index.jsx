@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useNavigate } from "react-router-dom";
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -15,18 +14,16 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import AddLocationIcon from '@mui/icons-material/AddLocation';
-import TerrainIcon from '@mui/icons-material/Terrain';
 import PersonIcon from '@mui/icons-material/Person';
-import CallReceivedIcon from '@mui/icons-material/CallReceived';
-import SendIcon from '@mui/icons-material/Send';
+import PublishedWithChangesIcon from '@mui/icons-material/PublishedWithChanges';
+import WhereToVoteIcon from '@mui/icons-material/WhereToVote';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Dashboardpage from './dashboardpage';
-import AddLandpage from './addlandpage/index';
-import MyLandpage from './myland';
-import LandGallerypage from './landgallery';
-import Receivedpage from './receivedrequest';
-import Sentpage from './sent';
+import VerifyUser from './verifyuser';
+import VerifyLandPage from './verifylandpage';
+import TransferOwnershipPage from './transferownershippage';
+import { VerifiedUser } from '@mui/icons-material';
+import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -38,7 +35,7 @@ interface Props {
   window?: () => Window;
 }
 
-export default function UserDashboard(props: Props) {
+export default function LandInspectorDashboard(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [page, setpage] = React.useState(0);
@@ -58,7 +55,7 @@ export default function UserDashboard(props: Props) {
                 <ListItemIcon>
                     <PersonIcon/>
                 </ListItemIcon>
-                <ListItemText>Tony Stark</ListItemText>
+                <ListItemText>Stan Lee</ListItemText>
             </ListItemButton>
         </ListItem>
       </List>
@@ -75,48 +72,32 @@ export default function UserDashboard(props: Props) {
         <ListItem disablePadding onClick={() => {setpage(2)}}>
             <ListItemButton>
                 <ListItemIcon>
-                    <AddLocationIcon/>
+                    <VerifiedUser/>
                 </ListItemIcon>
-                <ListItemText>Add Land</ListItemText>
+                <ListItemText>Verify User</ListItemText>
             </ListItemButton>
         </ListItem>
         <ListItem disablePadding onClick={() => {setpage(3)}}>
             <ListItemButton>
                 <ListItemIcon>
-                    <TerrainIcon/>
+                  <WhereToVoteIcon/>
                 </ListItemIcon>
-                <ListItemText>My Land</ListItemText>
+                <ListItemText>Verify Land</ListItemText>
             </ListItemButton>
         </ListItem>
         <ListItem disablePadding onClick={() => {setpage(4)}}>
             <ListItemButton>
                 <ListItemIcon>
-                    <TerrainIcon/>
+                    <PublishedWithChangesIcon/>
                 </ListItemIcon>
-                <ListItemText>Land Gallery</ListItemText>
-            </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding onClick={() => {setpage(5)}}>
-            <ListItemButton>
-                <ListItemIcon>
-                    <CallReceivedIcon/>
-                </ListItemIcon>
-                <ListItemText>Received Request</ListItemText>
-            </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding onClick={() => {setpage(6)}}>
-            <ListItemButton>
-                <ListItemIcon>
-                    <SendIcon/>
-                </ListItemIcon>
-                <ListItemText>Sent Land Request</ListItemText>
+                <ListItemText>Transfer Ownership</ListItemText>
             </ListItemButton>
         </ListItem>
         </List>
         <Divider />
         <List>
         <ListItem disablePadding onClick={() => navigate("/")}> 
-                <ListItemButton>
+                <ListItemButton >
                     <ListItemIcon>
                         <LogoutIcon/>
                     </ListItemIcon>
@@ -137,15 +118,11 @@ export default function UserDashboard(props: Props) {
       case 1:
         return <Dashboardpage/>;
       case 2:
-        return <AddLandpage/>;
+        return <VerifyUser/>;
       case 3:
-        return <MyLandpage/>;
+        return <VerifyLandPage></VerifyLandPage>
       case 4:
-        return <LandGallerypage/>;
-      case 5:
-        return <Receivedpage/>;
-      case 6:
-        return <Sentpage/>;   
+        return <TransferOwnershipPage></TransferOwnershipPage>
       default:
         return <Dashboardpage/>;
     }
@@ -172,7 +149,7 @@ export default function UserDashboard(props: Props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            User Dashboard
+            Land Inspector Dashboard
           </Typography>
         </Toolbar>
       </AppBar>
