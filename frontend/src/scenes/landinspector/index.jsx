@@ -22,7 +22,7 @@ import Dashboardpage from './dashboardpage';
 import VerifyUser from './verifyuser';
 import VerifyLandPage from './verifylandpage';
 import TransferOwnershipPage from './transferownershippage';
-import { Check, VerifiedUser } from '@mui/icons-material';
+import { VerifiedUser } from '@mui/icons-material';
 
 const drawerWidth = 240;
 
@@ -147,7 +147,7 @@ export default function LandInspectorDashboard(props: Props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            User Dashboard
+            Inspector Dashboard
           </Typography>
         </Toolbar>
       </AppBar>
