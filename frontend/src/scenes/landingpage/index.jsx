@@ -11,6 +11,7 @@ import lp_image from "../../assest/lp_image.png";
 import land_inspector from "../../assest/land_inspector.png";
 import user_image from "../../assest/user_image.png";
 import contract_owner from "../../assest/contract_owner.png";
+import FlexBetween from "components/FlexBetween";
 
 
 const LandingPage = () => {
@@ -56,13 +57,15 @@ const LandingPage = () => {
     >
 
         <Box sx={{ m: 2 }}>
-        <Card sx={{ maxWidth: 345, borderRadius: '16px'}}>
+        <Card sx={{ padding: "2rem", maxWidth: 360, borderRadius: '16px'}}>
+            
             <CardMedia
             component="img"
             alt="Contract Owner"
             height="210"
             image={contract_owner}
             />
+            
             <CardContent>
                 <Typography variant="h3">
                     <Grid container justifyContent="center">
@@ -81,7 +84,7 @@ const LandingPage = () => {
         </Box>
 
         <Box sx={{ m: 2 }}>
-        <Card sx={{ maxWidth: 345, borderRadius: '16px'}}>
+        <Card sx={{ padding: "2rem", maxWidth: 360, borderRadius: '16px'}}>
             <CardMedia
             component="img"
             alt="land inscpector"
@@ -104,7 +107,7 @@ const LandingPage = () => {
         </Box>
         
         <Box sx={{ m: 2 }}>
-        <Card sx={{ maxWidth: 345, borderRadius: '16px'}}>
+        <Card sx={{ padding: "2rem", maxWidth: 360, borderRadius: '16px'}}>
             <CardMedia
             component="img"
             alt="user"
