@@ -14,19 +14,14 @@ import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import AddLocationIcon from '@mui/icons-material/AddLocation';
-import TerrainIcon from '@mui/icons-material/Terrain';
 import PersonIcon from '@mui/icons-material/Person';
-import CallReceivedIcon from '@mui/icons-material/CallReceived';
-import SendIcon from '@mui/icons-material/Send';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import ManageHistoryIcon from '@mui/icons-material/ManageHistory';
+import ContactsIcon from '@mui/icons-material/Contacts';
 import LogoutIcon from '@mui/icons-material/Logout';
-import Dashboardpage from './dashboardpage';
-import AddLandpage from './addlandpage';
-import MyLandpage from './myland';
-import LandGallerypage from './landgallery';
-import Receivedpage from './receivedrequest';
-import Sentpage from './sent';
+import AddLIpage from './addLI';
+import AllLIpage from './allLI';
+import ChangeCOpage from './changeCo';
 
 const drawerWidth = 240;
 
@@ -38,7 +33,7 @@ interface Props {
   window?: () => Window;
 }
 
-export default function UserDashboard(props: Props) {
+export default function ContractDashboard(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [page, setpage] = React.useState(0);
@@ -58,7 +53,7 @@ export default function UserDashboard(props: Props) {
                 <ListItemIcon>
                     <PersonIcon/>
                 </ListItemIcon>
-                <ListItemText>Tony Stark</ListItemText>
+                <ListItemText>Steve Roger</ListItemText>
             </ListItemButton>
         </ListItem>
       </List>
@@ -67,49 +62,25 @@ export default function UserDashboard(props: Props) {
         <ListItem disablePadding onClick={() => {setpage(1)}}>
             <ListItemButton>
                 <ListItemIcon>
-                    <DashboardIcon/>
+                    <AdminPanelSettingsIcon/>
                 </ListItemIcon>
-                <ListItemText>Dashboard</ListItemText>
+                <ListItemText>Add Land Inspector</ListItemText>
             </ListItemButton>
         </ListItem>
         <ListItem disablePadding onClick={() => {setpage(2)}}>
             <ListItemButton>
                 <ListItemIcon>
-                    <AddLocationIcon/>
+                    <ContactsIcon/>
                 </ListItemIcon>
-                <ListItemText>Add Land</ListItemText>
+                <ListItemText>All Land Inspector</ListItemText>
             </ListItemButton>
         </ListItem>
         <ListItem disablePadding onClick={() => {setpage(3)}}>
             <ListItemButton>
                 <ListItemIcon>
-                    <TerrainIcon/>
+                    <ManageHistoryIcon/>
                 </ListItemIcon>
-                <ListItemText>My Land</ListItemText>
-            </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding onClick={() => {setpage(4)}}>
-            <ListItemButton>
-                <ListItemIcon>
-                    <TerrainIcon/>
-                </ListItemIcon>
-                <ListItemText>Land Gallery</ListItemText>
-            </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding onClick={() => {setpage(5)}}>
-            <ListItemButton>
-                <ListItemIcon>
-                    <CallReceivedIcon/>
-                </ListItemIcon>
-                <ListItemText>Received Request</ListItemText>
-            </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding onClick={() => {setpage(6)}}>
-            <ListItemButton>
-                <ListItemIcon>
-                    <SendIcon/>
-                </ListItemIcon>
-                <ListItemText>Sent Land Request</ListItemText>
+                <ListItemText>Change Contract Owner</ListItemText>
             </ListItemButton>
         </ListItem>
         </List>
@@ -135,19 +106,13 @@ export default function UserDashboard(props: Props) {
   const content = (page) => {
     switch(page) {
       case 1:
-        return <Dashboardpage/>;
+        return <AddLIpage/>;
       case 2:
-        return <AddLandpage/>;
+        return <AllLIpage/>;
       case 3:
-        return <MyLandpage/>;
-      case 4:
-        return <LandGallerypage/>;
-      case 5:
-        return <Receivedpage/>;
-      case 6:
-        return <Sentpage/>;   
+        return <ChangeCOpage/>;  
       default:
-        return <Dashboardpage/>;
+        return <AddLIpage/>;
     }
   };
 
@@ -172,7 +137,7 @@ export default function UserDashboard(props: Props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            User Dashboard
+            Contract Owner Dashboard
           </Typography>
         </Toolbar>
       </AppBar>

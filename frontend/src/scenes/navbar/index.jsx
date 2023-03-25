@@ -54,22 +54,31 @@ const NavbarPage = () => {
             {/* DESKTOP NAV */}
             {isNonMobileScreens ? (
                 <FlexBetween gap="2rem">
-                    <Typography sx={{ fontSize: "20px" }} onClick={() => navigate("/")}>
+                    {/* <Typography sx={{ fontSize: "20px" }} onClick={() => navigate("/")}>
                         Home
-                    </Typography>
+                    </Typography> */}
                     <Typography sx={{ fontSize: "20px", "&:hover": {
                         color: primaryLight,
                         cursor: "pointer",
                         }, }} onClick={() => navigate("/user")}>
                         User
                     </Typography>
-                    <Typography sx={{ fontSize: "20px" }} onClick={() => navigate("/land_inspector")}>
+                    <Typography sx={{ fontSize: "20px", "&:hover": {
+                        color: primaryLight,
+                        cursor: "pointer",
+                        }, }} onClick={() => navigate("/land_inspector")}>
                         Land Inspector
                     </Typography>
-                    <Typography sx={{ fontSize: "20px" }} onClick={() => navigate("/contract_owner")}>
+                    <Typography sx={{ fontSize: "20px","&:hover": {
+                        color: primaryLight,
+                        cursor: "pointer",
+                        }, }} onClick={() => navigate("/contract_owner")}>
                         Contract Owner
                     </Typography>
-                    <Typography sx={{ fontSize: "20px" }} onClick={() => navigate("/about")}>
+                    <Typography sx={{ fontSize: "20px", "&:hover": {
+                        color: primaryLight,
+                        cursor: "pointer",
+                        }, }} onClick={() => navigate("/about")}>
                         About
                     </Typography>
                 </FlexBetween>
@@ -110,9 +119,9 @@ const NavbarPage = () => {
             alignItems="center"
             gap="3rem"
           >
-                    <Typography sx={{ fontSize: "17px" }} onClick={() => navigate("/")}>
+                    {/* <Typography sx={{ fontSize: "17px" }} onClick={() => navigate("/")}>
                         Home
-                    </Typography>
+                    </Typography> */}
                     <Typography sx={{ fontSize: "17px" }} onClick={() => navigate("/user")}>
                         User
                     </Typography>
