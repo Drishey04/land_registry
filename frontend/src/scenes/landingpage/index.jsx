@@ -11,7 +11,7 @@ import lp_image from "../../assest/lp_image.png";
 import land_inspector from "../../assest/land_inspector.png";
 import user_image from "../../assest/user_image.png";
 import contract_owner from "../../assest/contract_owner.png";
-import FlexBetween from "components/FlexBetween";
+
 
 
 const LandingPage = () => {

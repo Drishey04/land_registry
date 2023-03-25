@@ -22,6 +22,9 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import AddLIpage from './addLI';
 import AllLIpage from './allLI';
 import ChangeCOpage from './changeCo';
+import { useDispatch, useSelector } from "react-redux";
+import { setCOPage } from 'state';
+import { useEffect } from "react";
 
 const drawerWidth = 240;
 
@@ -36,8 +39,12 @@ interface Props {
 export default function ContractDashboard(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [page, setpage] = React.useState(0);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setCOPage({CO_page: 1}));
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -59,7 +66,7 @@ export default function ContractDashboard(props: Props) {
       </List>
       <Divider />
       <List>
-        <ListItem disablePadding onClick={() => {setpage(1)}}>
+        <ListItem disablePadding onClick={() => {dispatch(setCOPage({CO_page: 1}))}}>
             <ListItemButton>
                 <ListItemIcon>
                     <AdminPanelSettingsIcon/>
@@ -67,7 +74,7 @@ export default function ContractDashboard(props: Props) {
                 <ListItemText>Add Land Inspector</ListItemText>
             </ListItemButton>
         </ListItem>
-        <ListItem disablePadding onClick={() => {setpage(2)}}>
+        <ListItem disablePadding onClick={() => {dispatch(setCOPage({CO_page: 2}))}}>
             <ListItemButton>
                 <ListItemIcon>
                     <ContactsIcon/>
@@ -75,7 +82,7 @@ export default function ContractDashboard(props: Props) {
                 <ListItemText>All Land Inspector</ListItemText>
             </ListItemButton>
         </ListItem>
-        <ListItem disablePadding onClick={() => {setpage(3)}}>
+        <ListItem disablePadding onClick={() => {dispatch(setCOPage({CO_page: 3}))}}>
             <ListItemButton>
                 <ListItemIcon>
                     <ManageHistoryIcon/>
@@ -102,9 +109,10 @@ export default function ContractDashboard(props: Props) {
   );
 
   const container = window !== undefined ? () => window().document.body : undefined;
+  const pageno = useSelector((state) => state.CO_page);
 
-  const content = (page) => {
-    switch(page) {
+  const content = (pageno) => {
+    switch(pageno) {
       case 1:
         return <AddLIpage/>;
       case 2:
@@ -178,7 +186,7 @@ export default function ContractDashboard(props: Props) {
         sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
       >
         <Toolbar />
-        {content(page)}
+        {content(pageno)}
       </Box>
     </Box>
   );

@@ -27,6 +27,9 @@ import MyLandpage from './myland';
 import LandGallerypage from './landgallery';
 import Receivedpage from './receivedrequest';
 import Sentpage from './sent';
+import { useDispatch, useSelector } from "react-redux";
+import { setUserPage } from 'state';
+import { useEffect } from "react";
 
 const drawerWidth = 240;
 
@@ -41,8 +44,13 @@ interface Props {
 export default function UserDashboard(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [page, setpage] = React.useState(0);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setUserPage({User_page: 1}));
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -64,7 +72,7 @@ export default function UserDashboard(props: Props) {
       </List>
       <Divider />
       <List>
-        <ListItem disablePadding onClick={() => {setpage(1)}}>
+        <ListItem disablePadding onClick={() => {dispatch(setUserPage({User_page: 1}))}}>
             <ListItemButton>
                 <ListItemIcon>
                     <DashboardIcon/>
@@ -72,7 +80,7 @@ export default function UserDashboard(props: Props) {
                 <ListItemText>Dashboard</ListItemText>
             </ListItemButton>
         </ListItem>
-        <ListItem disablePadding onClick={() => {setpage(2)}}>
+        <ListItem disablePadding onClick={() => {dispatch(setUserPage({User_page: 2}))}}>
             <ListItemButton>
                 <ListItemIcon>
                     <AddLocationIcon/>
@@ -80,7 +88,7 @@ export default function UserDashboard(props: Props) {
                 <ListItemText>Add Land</ListItemText>
             </ListItemButton>
         </ListItem>
-        <ListItem disablePadding onClick={() => {setpage(3)}}>
+        <ListItem disablePadding onClick={() => {dispatch(setUserPage({User_page: 3}))}}>
             <ListItemButton>
                 <ListItemIcon>
                     <TerrainIcon/>
@@ -88,7 +96,7 @@ export default function UserDashboard(props: Props) {
                 <ListItemText>My Land</ListItemText>
             </ListItemButton>
         </ListItem>
-        <ListItem disablePadding onClick={() => {setpage(4)}}>
+        <ListItem disablePadding onClick={() => {dispatch(setUserPage({User_page: 4}))}}>
             <ListItemButton>
                 <ListItemIcon>
                     <TerrainIcon/>
@@ -96,7 +104,7 @@ export default function UserDashboard(props: Props) {
                 <ListItemText>Land Gallery</ListItemText>
             </ListItemButton>
         </ListItem>
-        <ListItem disablePadding onClick={() => {setpage(5)}}>
+        <ListItem disablePadding onClick={() => {dispatch(setUserPage({User_page: 5}))}}>
             <ListItemButton>
                 <ListItemIcon>
                     <CallReceivedIcon/>
@@ -104,7 +112,7 @@ export default function UserDashboard(props: Props) {
                 <ListItemText>Received Request</ListItemText>
             </ListItemButton>
         </ListItem>
-        <ListItem disablePadding onClick={() => {setpage(6)}}>
+        <ListItem disablePadding onClick={() => {dispatch(setUserPage({User_page: 6}))}}>
             <ListItemButton>
                 <ListItemIcon>
                     <SendIcon/>
@@ -131,9 +139,10 @@ export default function UserDashboard(props: Props) {
   );
 
   const container = window !== undefined ? () => window().document.body : undefined;
+  const pageno = useSelector((state) => state.User_page);
 
-  const content = (page) => {
-    switch(page) {
+  const content = (pageno) => {
+    switch(pageno) {
       case 1:
         return <Dashboardpage/>;
       case 2:
@@ -213,7 +222,7 @@ export default function UserDashboard(props: Props) {
         sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
       >
         <Toolbar />
-        {content(page)}
+        {content(pageno)}
       </Box>
     </Box>
   );
