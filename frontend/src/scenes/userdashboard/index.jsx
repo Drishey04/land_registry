@@ -30,8 +30,18 @@ import Sentpage from './sent';
 import { useDispatch, useSelector } from "react-redux";
 import { setUserPage } from 'state';
 import { useEffect } from "react";
+import { useMetaMask } from "metamask-react";
+import { Button } from '@mui/material';
+import LoginPage from 'scenes/loginpage';
+import abi from "../../contract/LandRecords"
+import RegisterPage from 'scenes/registration/user';
+import contractAddress from "../../constants.json"
 
 const drawerWidth = 240;
+let Web3 = require("web3");
+const web3 = new Web3(new Web3.providers.HttpProvider("HTTP://127.0.0.1:7545"));
+console.log(contractAddress)
+let contract = new web3.eth.Contract(abi.abi,"0x07Fa4388207f17e38d3DF7552b7184B5b1A1Fa75");
 
 interface Props {
   /**
@@ -42,19 +52,31 @@ interface Props {
 }
 
 export default function UserDashboard(props: Props) {
+
+  const { status, connect, account, chainId, ethereum } = useMetaMask(); 
+
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [isReg,setIsReg] = React.useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(setUserPage({User_page: 1}));
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  
+  //console.log(account)
+ 
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+  const fetchRegistered = async()=>{
+    const res = await contract.methods.isUserRegistered(account).call();
+    setIsReg(res);
+    
+  }
 
   const drawer = (
     <div>
@@ -123,7 +145,7 @@ export default function UserDashboard(props: Props) {
         </List>
         <Divider />
         <List>
-        <ListItem disablePadding onClick={() => navigate("/")}> 
+        <ListItem disablePadding onClick={() => { navigate("/")}}> 
                 <ListItemButton>
                     <ListItemIcon>
                         <LogoutIcon/>
@@ -160,70 +182,92 @@ export default function UserDashboard(props: Props) {
     }
   };
 
-  return (
-    <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      <AppBar
-        position="fixed"
-        sx={{
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
-          ml: { sm: `${drawerWidth}px` },
-        }}
-      >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
+  if(status == "notConnected"){
+      return (<LoginPage/>)
+  }else if(status == "connected"){
+    //console.log(account)
+    
+    //contract.methods.isUserRegistered(account).send({from:account,gas:3000000}).then((res)=>{console.log(res);setIsRegistered(res.status)})
+    fetchRegistered();
+    console.log(isReg)
+    if(isReg == true){
+
+      return (
+        
+        <Box sx={{ display: 'flex' }}>
+          <CssBaseline />
+          <AppBar
+            position="fixed"
+            sx={{
+              width: { sm: `calc(100% - ${drawerWidth}px)` },
+              ml: { sm: `${drawerWidth}px` },
+            }}
           >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            User Dashboard
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Box
-        component="nav"
-        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-        aria-label="mailbox folders"
-      >
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-        <Drawer
-          container={container}
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
-          sx={{
-            display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-          }}
-        >
-          {drawer}
-        </Drawer>
-        <Drawer
-          variant="permanent"
-          sx={{
-            display: { xs: 'none', sm: 'block' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-          }}
-          open
-        >
-          {drawer}
-        </Drawer>
-      </Box>
-      <Box
-        component="main"
-        sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
-      >
-        <Toolbar />
-        {content(pageno)}
-      </Box>
-    </Box>
-  );
+            <Toolbar>
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                edge="start"
+                onClick={handleDrawerToggle}
+                sx={{ mr: 2, display: { sm: 'none' } }}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Typography variant="h6" noWrap component="div">
+                User Dashboard
+              </Typography>
+            </Toolbar>
+          </AppBar>
+          <Box
+            component="nav"
+            sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+            aria-label="mailbox folders"
+          >
+            {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+            <Drawer
+              container={container}
+              variant="temporary"
+              open={mobileOpen}
+              onClose={handleDrawerToggle}
+              ModalProps={{
+                keepMounted: true, // Better open performance on mobile.
+              }}
+              sx={{
+                display: { xs: 'block', sm: 'none' },
+                '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+              }}
+            >
+              {drawer}
+            </Drawer>
+            <Drawer
+              variant="permanent"
+              sx={{
+                display: { xs: 'none', sm: 'block' },
+                '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+              }}
+              open
+            >
+              {drawer}
+            </Drawer>
+          </Box>
+          <Box
+            component="main"
+            sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
+          >
+            <Toolbar />
+            {content(pageno)}
+          </Box>
+        </Box>
+      );
+
+    }else if(isReg == false){
+      return(
+        <RegisterPage/>
+      )
+    }
+    
+
+  }
+
+  
 }

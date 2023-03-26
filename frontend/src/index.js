@@ -17,7 +17,7 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { PersistGate } from "redux-persist/integration/react";
-
+import { MetaMaskProvider } from "metamask-react";
 
 
 
@@ -39,7 +39,9 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistStore(store)}>
-        <App />
+      <MetaMaskProvider>
+      <App />
+      </MetaMaskProvider>
       </PersistGate>
     </Provider>
   </React.StrictMode>

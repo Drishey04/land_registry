@@ -27,7 +27,8 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setLiPage } from 'state';
 import { useEffect } from "react";
-
+import LoginPage from 'scenes/loginpage';
+import { useMetaMask } from "metamask-react";
 const drawerWidth = 240;
 
 interface Props {
@@ -39,6 +40,7 @@ interface Props {
 }
 
 export default function LandInspectorDashboard(props: Props) {
+  const { status, connect, account, chainId, ethereum } = useMetaMask();
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const navigate = useNavigate();
@@ -136,6 +138,10 @@ export default function LandInspectorDashboard(props: Props) {
     }
   };
 
+  if(status == "notConnected"){
+    return (<LoginPage/>)
+}else if(status == "connected"){
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -202,4 +208,5 @@ export default function LandInspectorDashboard(props: Props) {
       </Box>
     </Box>
   );
+}
 }

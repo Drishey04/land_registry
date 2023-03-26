@@ -25,6 +25,7 @@ import ChangeCOpage from './changeCo';
 import { useDispatch, useSelector } from "react-redux";
 import { setCOPage } from 'state';
 import { useEffect } from "react";
+import LIRegisterPage from './addLI';
 
 const drawerWidth = 240;
 
@@ -114,7 +115,7 @@ export default function ContractDashboard(props: Props) {
   const content = (pageno) => {
     switch(pageno) {
       case 1:
-        return <AddLIpage/>;
+        return <LIRegisterPage/>;
       case 2:
         return <AllLIpage/>;
       case 3:

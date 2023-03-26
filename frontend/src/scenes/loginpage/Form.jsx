@@ -11,7 +11,7 @@ import * as yup from "yup";
 import loginbutton from "../../assest/loginbutton.png";
 import CardMedia from '@mui/material/CardMedia';
 import Card from '@mui/material/Card';
-
+import { useMetaMask } from "metamask-react";
 
 
 const registerSchema = yup.object().shape({
@@ -37,7 +37,7 @@ const registerSchema = yup.object().shape({
 const Form = () => {
     const { palette } = useTheme();
     // const isNonMobile = useMediaQuery("(min-width:600px)");
-    
+    const { status, connect, account, chainId, ethereum } = useMetaMask();
 
     return (
         <Formik 
@@ -56,6 +56,7 @@ const Form = () => {
           
           <Box>
           <Button
+              onClick={connect}
               fullWidth
               type="submit"
               sx={{

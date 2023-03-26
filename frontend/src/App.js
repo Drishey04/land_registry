@@ -9,11 +9,18 @@ import LandInspectorDashboard from "scenes/landinspector";
 import RegisterPage from "scenes/registration/user";
 import LIRegisterPage from "scenes/registration/land_inspector";
 import LoginPage from "scenes/loginpage/index";
+import { useMetaMask } from "metamask-react";
+import abi from "./contract/LandRecords";
 
 
+let Web3 = require("web3");
 function App() {
-
+  const { status, connect, account, chainId, ethereum } = useMetaMask();
   const theme = createTheme(themeSettings());
+  const web3 = new Web3(new Web3.providers.HttpProvider("HTTP://127.0.0.1:7545"));
+  //console.log(web3)
+  //console.log(abi.abi)
+  let contract = new web3.eth.Contract(abi.abi,"0x03ccE4873E9Ce72536C8CD82F975aeA26eB26E56");
   
   return (
     <div className="App">

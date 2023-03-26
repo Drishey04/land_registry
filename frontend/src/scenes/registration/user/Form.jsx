@@ -13,6 +13,13 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import Dropzone from "react-dropzone";
 import FlexBetween from "components/FlexBetween";
+import axios from "axios"
+import { useState } from "react";
+import abi from "../../../contract/LandRecords";
+import { useMetaMask } from "metamask-react";
+import { useNavigate } from "react-router-dom";
+
+let Web3 = require("web3");
 
 const registerSchema = yup.object().shape({
     firstName: yup.string().required("required"),
@@ -40,10 +47,57 @@ const registerSchema = yup.object().shape({
 
 const Form = () => {
     const { palette } = useTheme();
+    const [file, setFile] = useState()
+    const [myipfsHash, setIPFSHASH] = useState('');
+    const { status, connect, account, chainId, ethereum } = useMetaMask();
+    const navigate = useNavigate();
+    const web3 = new Web3(new Web3.providers.HttpProvider("HTTP://127.0.0.1:7545"));
+    //console.log(web3)
+    //console.log(abi.abi)
+    let contract = new web3.eth.Contract(abi.abi,"0x91864Dfa6b9Aeee350E5cc6b4226272b6cFD4569");
+    console.log(account)
+    const handleFile=async (fileToHandle) =>{
+
     
+
+      console.log('starting')
+  
+      // initialize the form data
+      const formData = new FormData()
+  
+      // append the file form data to 
+      formData.append("file", fileToHandle)
+  
+      // call the keys from .env
+  
+      const API_KEY = "7d9a7ff16c2d035d32d4";
+      const API_SECRET = "96fcf1ec6ddde4206ceed8f8c7eccfe287889aeb33aa94594c93b780581c0ec1";
+  
+      // the endpoint needed to upload the file
+      const url =  `https://api.pinata.cloud/pinning/pinFileToIPFS`
+  
+      const response = await axios.post(
+        url,
+        formData,
+        {
+            maxContentLength: "Infinity",
+            headers: {
+                "Content-Type": `multipart/form-data;boundary=${formData._boundary}`, 
+                'pinata_api_key': API_KEY,
+                'pinata_secret_api_key': API_SECRET
+  
+            }
+        }
+    )
+
+    setIPFSHASH(response.data.IpfsHash)
+    console.log(myipfsHash);
+    }
     
     const isNonMobile = useMediaQuery("(min-width:600px)");
-    
+    const handleSubmit =(e)=>{
+      e.preventDefault();
+    }
 
     return (
         <Formik 
@@ -58,7 +112,7 @@ const Form = () => {
             handleChange,
             setFieldValue,
         }) => (
-        <form>
+        <form onSubmit={handleSubmit}>
         <Box
             display="grid"
             gap="30px"
@@ -80,15 +134,18 @@ const Form = () => {
                   sx={{ gridColumn: "span 2" }}
                 />
             <TextField
-                  label="Last Name"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.lastName}
-                  name="lastName"
-                  error={Boolean(touched.lastName) && Boolean(errors.lastName)}
-                  helperText={touched.lastName && errors.lastName}
-                  sx={{ gridColumn: "span 2" }}
-                />
+                label="Last Name"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.lastName}
+                name="lastName"
+                error={
+                  Boolean(touched.lastName) && Boolean(errors.lastName)
+                }
+                helperText={touched.lastName && errors.lastName}
+                sx={{ gridColumn: "span 2" }}
+              />
+            
             <TextField
                   label="Age"
                   onBlur={handleBlur}
@@ -117,33 +174,8 @@ const Form = () => {
                   borderRadius="5px"
                   p="1rem"
                 >
-                 <Dropzone
-                    acceptedFiles=".jpg,.jpeg,.png"
-                    multiple={false}
-                    onDrop={(acceptedFiles) =>
-                      setFieldValue("picture", acceptedFiles[0])
-                    }
-                  >
-                    {({ getRootProps, getInputProps }) => (
-                      <Box
-                        {...getRootProps()}
-                        border={`2px dashed ${palette.primary.main}`}
-                        p="1rem"
-                        sx={{ "&:hover": { cursor: "pointer" } }}
-                      >
-                        <input {...getInputProps()} />
-                        {!values.picture ? (
-                          <p>Add Your Document Here</p>
-                        ) : (
-                          <FlexBetween>
-                            <Typography>{values.picture.name}</Typography>
-                            <EditOutlinedIcon />
-                          </FlexBetween>
-                        )}
-                      </Box>
-                    )}
-
-                  </Dropzone>
+                <input type="file" onChange={(event)=>setFile(event.target.files[0])}/>Add document
+                  <Button onClick={()=>handleFile(file)} > Upload </Button>
             </Box>
             <TextField
                 label="Email"
@@ -184,6 +216,23 @@ const Form = () => {
           
           <Box>
           <Button
+              onClick={()=>{
+                console.log(values)
+                const docUrl = `https://gateway.pinata.cloud/ipfs/${myipfsHash}`
+                //const reg = contract.methods.registerNewUser();
+                //const res = await contract.methods.registerNewUser(values.fullName,values.email,values.age,values.city,values.aadharcardno,values.pancardno,docUrl).send({from:account});
+                contract.methods.registerNewUser(
+                  values.firstName + values.lastName,
+                  values.email,
+                  values.age,
+                  values.city,
+                  values.aadharcardno,
+                  values.pancardno,
+                  docUrl).send({from:account,gas:3000000}).then(console.log);
+                  navigate("/user");
+                }
+                
+              }
               fullWidth
               type="submit"
               sx={{
